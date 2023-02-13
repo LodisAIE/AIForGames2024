@@ -4,19 +4,17 @@
 #include "SampleScene.h"
 
 bool Engine::m_applicationShouldClose = false;
-Scene** Engine::m_scenes = new Scene*;
-ActorArray Engine::m_actorsToDelete = ActorArray();
-int Engine::m_sceneCount = 0;
+DynamicArray<Scene*> Engine::m_scenes = DynamicArray<Scene*>();
+DynamicArray<Actor*> Engine::m_actorsToDelete = DynamicArray<Actor*>();
 int Engine::m_currentSceneIndex = 0;
 
 
 Engine::Engine()
 {
 	m_applicationShouldClose = false;
-	m_scenes = new Scene*;
+	m_scenes = DynamicArray<Scene*>();
 	m_camera = new Camera2D();
 	m_currentSceneIndex = 0;
-	m_sceneCount = 0;
 }
 
 void Engine::start()
@@ -84,10 +82,10 @@ void Engine::run()
 Scene* Engine::getScene(int index)
 {
 	//Return nullptr if the scene is out of bounds
-	if (index < 0 || index >= m_sceneCount)
-		return nullptr;
+	Scene* scene;
+	m_scenes.getItem(index, scene);
 
-	return m_scenes[index];
+	return scene;
 }
 
 Scene* Engine::getCurrentScene()
@@ -106,28 +104,9 @@ int Engine::addScene(Scene* scene)
 	if (!scene)
 		return -1;
 
-	//Create a new temporary array that one size larger than the original
-	Scene** tempArray = new Scene * [m_sceneCount + 1];
+	m_scenes.add(scene);
 
-	//Copy values from old array into new array
-	for (int i = 0; i < m_sceneCount; i++)
-	{
-		tempArray[i] = m_scenes[i];
-	}
-
-	//Store the current index
-	int index = m_sceneCount;
-
-	//Sets the scene at the new index to be the scene passed in
-	tempArray[index] = scene;
-
-	delete m_scenes;
-
-	//Set the old array to the tmeporary array
-	m_scenes = tempArray;
-	m_sceneCount++;
-
-	return index;
+	return m_scenes.getLength() - 1;
 }
 
 void Engine::addActorToDeletionList(Actor* actor)
@@ -137,12 +116,12 @@ void Engine::addActorToDeletionList(Actor* actor)
 		return;
 
 	//Add actor to deletion list
-	m_actorsToDelete.addActor(actor);
+	m_actorsToDelete.add(actor);
 
 	//Add all the actors children to the deletion list
 	for (int i = 0; i < actor->getTransform()->getChildCount(); i++)
 	{
-		m_actorsToDelete.addActor(actor->getTransform()->getChildren()[i]->getOwner());
+		m_actorsToDelete.add(actor->getTransform()->getChildren()[i]->getOwner());
 	}
 }
 
@@ -152,41 +131,13 @@ bool Engine::removeScene(Scene* scene)
 	if (!scene)
 		return false;
 
-	bool sceneRemoved = false;
-
-	//Create a new temporary array that is one less than our original array
-	Scene** tempArray = new Scene * [m_sceneCount - 1];
-
-	//Copy all scenes except the scene we don't want into the new array
-	int j = 0;
-	for (int i = 0; i < m_sceneCount; i++)
-	{
-		if (tempArray[i] != scene)
-		{
-			tempArray[j] = m_scenes[i];
-			j++;
-		}
-		else
-		{
-			sceneRemoved = true;
-		}
-	}
-
-	//If the scene was successfully removed set the old array to be the new array
-	if (sceneRemoved)
-	{
-		m_scenes = tempArray;
-		m_sceneCount--;
-	}
-
-
-	return sceneRemoved;
+	return m_scenes.remove(scene);
 }
 
 void Engine::setCurrentScene(int index)
 {
 	//If the index is not within the range of the the array return
-	if (index < 0 || index >= m_sceneCount)
+	if (index < 0 || index >= m_scenes.getLength())
 		return;
 
 	//Call end for the previous scene before changing to the new one
@@ -218,7 +169,7 @@ void Engine::destroyActorsInList()
 	for (int i = 0; i < m_actorsToDelete.getLength(); i++)
 	{
 		//Remove actor from the scene
-		Actor* actorToDelete = m_actorsToDelete.getActor(i);
+		Actor* actorToDelete = m_actorsToDelete[i];
 		if (!getCurrentScene()->removeActor(actorToDelete))
 			getCurrentScene()->removeUIElement(actorToDelete);
 
@@ -231,10 +182,10 @@ void Engine::destroyActorsInList()
 	}
 
 	//Clear the array
-	m_actorsToDelete = ActorArray();
+	m_actorsToDelete.clear();
 }
 
-void Engine::CloseApplication()
+void Engine::closeApplication()
 {
 	Engine::m_applicationShouldClose = true;
 }

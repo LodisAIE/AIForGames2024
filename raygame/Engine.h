@@ -1,8 +1,10 @@
 #pragma once
 #include <Matrix3.h>
-#include "ActorArray.h"
-class Camera2D;
+#include "DynamicArray.h"
+
 class Scene;
+class Actor;
+class Camera2D;
 
 static class Engine
 {
@@ -78,7 +80,7 @@ public:
     /// <summary>
     /// Ends the application and closes the window.
     /// </summary>
-    static void CloseApplication();
+    static void closeApplication();
 
     /// <returns>The world matrix of the current scene.</returns>
     static MathLibrary::Matrix3* getWorld();
@@ -107,9 +109,8 @@ private:
 private:
     Camera2D* m_camera;
     static bool m_applicationShouldClose;
-    static Scene** m_scenes;
-    static int m_sceneCount;
-    static ActorArray m_actorsToDelete;
+    static DynamicArray<Scene*> m_scenes;
+    static DynamicArray<Actor*> m_actorsToDelete;
     static int m_currentSceneIndex;
     static const int m_screenWidth = 700;
     static const int m_screenHeight = 800;
