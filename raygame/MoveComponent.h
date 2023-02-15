@@ -6,7 +6,7 @@ class MoveComponent :
     public Component
 {
 public:
-    MoveComponent() : Component::Component() {}
+    MoveComponent(Actor* owner);
 
     /// <summary>
     /// Gets the current speed and direction of this actor.

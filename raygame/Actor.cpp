@@ -70,6 +70,8 @@ Component* Actor::addComponent(Component* component)
     //Increment the component count.
     m_componentCount++;
 
+    onAddComponent(component);
+
     //Return the new component that was added.
     return component;
 }

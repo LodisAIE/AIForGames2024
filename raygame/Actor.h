@@ -48,6 +48,7 @@ public:
     /// Returns nullptr if a match wasn't found.</returns>
     Component* getComponent(const char* componentName);
     Component* addComponent(Component* component);
+    virtual void onAddComponent(Component* component) {};
     bool removeComponent(const char* componentName);
 
     /// <summary>

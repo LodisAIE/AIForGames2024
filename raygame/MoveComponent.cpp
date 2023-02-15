@@ -2,6 +2,13 @@
 #include "Actor.h"
 #include "Transform2D.h"
 
+MoveComponent::MoveComponent(Actor* owner) : Component(owner, "MoveComponent")
+{
+	m_maxSpeed = 0;
+	m_updateFacing = false;
+	m_velocity = { 0,0 };
+}
+
 void MoveComponent::update(float deltaTime)
 {
 	//Add the current velocity to the current postion to get the new position.
