@@ -162,6 +162,7 @@
     <ClCompile Include="SpriteComponent.cpp" />
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Transform2D.cpp" />
+    <ClCompile Include="WanderComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABBCollider.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Transform2D.h" />
+    <ClInclude Include="WanderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Images\bullet.png">
