@@ -4,30 +4,31 @@
 #include "Agent.h"
 #include "SeekComponent.h"
 #include "FleeComponent.h"
+#include "WanderComponent.h"
+#include "MoveComponent.h"
 #include <stdlib.h>
+#include "ChaserComponent.h"
 
 void SampleScene::start()
 {
 	Scene::start();
 
 	//This is a better comment
-	Agent* test = new Agent(50, 50, "Test");
-	Agent* target = new Agent(300, 300, "Target");
-	float positiveRandVal = (float)(rand()) / RAND_MAX;
-	float negativeRandVal = -((float)(rand()) / RAND_MAX);
-	float randVal = positiveRandVal + negativeRandVal;
-	test->setMaxForce(100);
+	Agent* chaser = new Agent(50, 50, "Test");
+	Agent* target = new Agent(60, 60, "Target");
+
+	chaser->setMaxForce(100);
 	target->setMaxForce(75);
 
-	test->addComponent(new SpriteComponent(test, "Images/player.png"));
+	chaser->addComponent(new SpriteComponent(chaser, "Images/player.png"));
 	target->addComponent(new SpriteComponent(target, "Images/enemy.png"));
 
-	test->getTransform()->setScale({ 50, 50 });
+	chaser->getTransform()->setScale({ 50, 50 });
 	target->getTransform()->setScale({ 50, 50 });
 
-	test->addComponent(new SeekComponent(target, 50, test));
-	target->addComponent(new FleeComponent(test, 50, target));
+	chaser->addComponent(new ChaserComponent(50, target, chaser));
+	target->addComponent(new WanderComponent(100, 100, 100, target));
 
-	addActor(test);
+	addActor(chaser);
 	addActor(target);
 }

@@ -37,11 +37,23 @@ public:
     /// </summary>
     void setUpdateFacing(bool updateFacing) { m_updateFacing = updateFacing; }
 
+    /// <summary>
+    /// Gets whether or not this actor should wrap around to the other side of the 
+    /// screen when out of bounds.
+    /// </summary>
+    bool getWrapPosition() { return m_wrapPosition; }
+    /// <summary>
+    /// Sets whether or not this actor should wrap around to the other side of the 
+    /// screen when out of bounds.
+    /// </summary>
+    void setWrapPosition(bool wrap) { m_wrapPosition = wrap; }
+
     void update(float deltaTime) override;
 
 private:
     MathLibrary::Vector2 m_velocity;
     float m_maxSpeed;
     bool m_updateFacing;
+    bool m_wrapPosition = true;
 };
 

@@ -22,6 +22,9 @@ public:
     float getMaxForce() { return m_maxForce; }
     void setMaxForce(float maxForce) { m_maxForce = maxForce; }
 
+    void disableMovement();
+    void enableMovement() { m_canMove = true; }
+
     MoveComponent* getMoveComponent() { return m_moveComponent; }
 
 
@@ -29,6 +32,8 @@ public:
 private:
     DynamicArray<SteeringComponent*> m_steeringComponents;
     MoveComponent* m_moveComponent;
+
+    bool m_canMove;
 
     float m_maxForce;
     MathLibrary::Vector2 m_force;

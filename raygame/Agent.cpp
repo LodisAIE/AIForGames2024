@@ -8,13 +8,14 @@ Agent::Agent(float x, float y, const char* name) : Actor(x, y, name)
 	m_steeringComponents = DynamicArray<SteeringComponent*>();
 	m_maxForce = 0.0f;
 	m_force = { 0,0 };
+	m_canMove = true;
+
+	m_moveComponent = (MoveComponent*)addComponent(new MoveComponent(this));
 }
 
 void Agent::start()
 {
 	Actor::start();
-
-	m_moveComponent = (MoveComponent*)addComponent(new MoveComponent(this));
 	m_moveComponent->setMaxSpeed(500);
 	m_moveComponent->setUpdateFacing(true);
 }
@@ -22,6 +23,9 @@ void Agent::start()
 void Agent::update(float deltaTime)
 {
 	Actor::update(deltaTime);
+
+	if (!m_canMove)
+		return;
 
 	//Collect all the force being applied from the steering behaviours.
 	for (int i = 0; i < m_steeringComponents.getLength(); i++)
@@ -45,4 +49,11 @@ void Agent::onAddComponent(Component* component)
 
 	if (newComponent)
 		m_steeringComponents.add(newComponent);
+}
+
+void Agent::disableMovement()
+{
+	getMoveComponent()->setVelocity({ 0,0 });
+	m_force = { 0,0 };
+	m_canMove = false;
 }

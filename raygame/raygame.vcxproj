@@ -149,6 +149,7 @@
     <ClCompile Include="AABBCollider.cpp" />
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="ChaserComponent.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SeekComponent.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="StateMachineComponent.cpp" />
     <ClCompile Include="SteeringComponent.cpp" />
     <ClCompile Include="Transform2D.cpp" />
     <ClCompile Include="WanderComponent.cpp" />
@@ -168,6 +170,7 @@
     <ClInclude Include="AABBCollider.h" />
     <ClInclude Include="Actor.h" />
     <ClInclude Include="Agent.h" />
+    <ClInclude Include="ChaserComponent.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SeekComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="StateMachineComponent.h" />
     <ClInclude Include="SteeringComponent.h" />
     <ClInclude Include="Transform2D.h" />
     <ClInclude Include="WanderComponent.h" />

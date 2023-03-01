@@ -6,13 +6,12 @@
 SeekComponent::SeekComponent(Actor* target, float steeringForce, Actor* owner) :
     SteeringComponent(target, steeringForce, owner, "SeekComponent")
 {
-    
 }
 
 MathLibrary::Vector2 SeekComponent::calculateForce()
 {
     //If there isn't a valid target...
-    if (!getTarget())
+    if (!getTarget() || getSteeringForce() == 0)
         //...don't apply a force.
         return { 0,0 };
 
