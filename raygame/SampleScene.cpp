@@ -8,6 +8,7 @@
 #include "MoveComponent.h"
 #include <stdlib.h>
 #include "ChaserComponent.h"
+#include "ComplexChaserComponent.h"
 
 void SampleScene::start()
 {
@@ -26,7 +27,7 @@ void SampleScene::start()
 	chaser->getTransform()->setScale({ 50, 50 });
 	target->getTransform()->setScale({ 50, 50 });
 
-	chaser->addComponent(new ChaserComponent(50, target, chaser));
+	chaser->addComponent(new ComplexChaserComponent(50, target, chaser));
 	target->addComponent(new WanderComponent(100, 100, 100, target));
 
 	addActor(chaser);
